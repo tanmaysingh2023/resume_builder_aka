@@ -14,7 +14,7 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl">
                 {/* Left Content */}
                 <div className="flex flex-col justify-center">
-                    <span className="text-sm text-gray-400 mb-2">Version 4</span>
+                    <span className="text-sm text-gray-400 mb-2">Team Akatsuki helps you build</span>
                     <h1 className="text-5xl font-bold mb-4 leading-snug">
                         Build professional resumes in minutes.
                     </h1>
@@ -46,7 +46,7 @@ const Home = () => {
                     }}
                 >
                     <img
-                        src="https://images.pexels.com/photos/7809930/pexels-photo-7809930.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=600"
                         alt="Resume Preview"
                         className="rounded-lg w-[600px] h-[600px] object-cover"
                     />
