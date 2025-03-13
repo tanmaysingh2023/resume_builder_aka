@@ -65,8 +65,8 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-5xl text-neon-pink font-bold drop-shadow-neon-pink mb-6 text-center">
+    <div className="min-h-screen bg-black text-white p-6 pt-20">
+      <h1 className="text-5xl text-neon-purple font-bold drop-shadow-neon-pink mb-6 text-center">
       {user ? user.name : "Dashboard"}
       </h1>
 
@@ -74,14 +74,14 @@ function Dashboard() {
 
         <button
           onClick={() => navigate("/resume-builder")}
-          className="bg-neon-pink text-white p-4 rounded-lg shadow-neon-pink hover:scale-105 transition-transform text-center"
+          className="bg-neon-purple text-white p-4 rounded-lg shadow-neon-cyan hover:scale-105 transition-transform text-center"
         >
           Create Resume
         </button>
 
         <button
           onClick={() => navigate("/templates")}
-          className="bg-neon-pink text-white p-4 rounded-lg shadow-neon-pink hover:scale-105 transition-transform text-center"
+          className="bg-neon-pink text-white p-4 rounded-lg shadow-neon-cyan hover:scale-105 transition-transform text-center"
         >
           View Templates
         </button>

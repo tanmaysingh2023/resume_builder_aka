@@ -56,7 +56,7 @@ const ResumeBuilder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-yellow  text-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-yellow  text-white flex items-center justify-center p-6 pt-20">
   <div className="max-w-4xl w-full bg-black-900 border-t-amber-50 rounded-lg shadow-lg p-8">
     <h2 
       className="text-3xl font-bold text-white-400 mb-6"    >

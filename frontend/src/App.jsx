@@ -12,6 +12,8 @@ import Header from "./pages/Header";
 import TutStructure from "./pages/TutStructure";
 import TutSummary from "./pages/TutSummary";
 import TutATS from "./pages/TutATS";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/tut-struc" element={<TutStructure/>}/>
         <Route path="/tut-summary" element={<TutSummary/>}/>
         <Route path="/tut-ats" element={<TutATS/>}/>
+        <Route path="/about" element={<About/>}></Route>
+        <Route path="/contact" element={<Contact/>}></Route>
       </Routes>
       </div>
     </Router>

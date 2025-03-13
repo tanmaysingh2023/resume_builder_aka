@@ -21,7 +21,7 @@ const Home = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col items-center px-6 py-12">
+        <div className=" min-h-screen bg-black text-white flex flex-col items-center pt-20 px-6 py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl">
                 {/* Left Content */}
                 <div className="flex flex-col justify-center">

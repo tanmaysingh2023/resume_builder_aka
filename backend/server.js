@@ -38,10 +38,10 @@ app.get('/api/check-auth', authMiddleware);
 
 
 // POST: Submit resume data and generate PDF
-app.post("/api/submit", authMiddleware, async (req, res) => {
+app.post("/api/submit", authMiddleware,async (req, res) => {
   try {
-   // console.log("Received resume submission request:", req.body);
-   // console.log("Authenticated user:", req.user);
+    // console.log("Received resume submission request:", req.body);
+    // console.log("Authenticated user:", req.user);
 
     const {
       name,
@@ -85,7 +85,7 @@ app.post("/api/submit", authMiddleware, async (req, res) => {
     });
     //console.log(newResume)
     await newResume.save();
-   // console.log("Resume saved successfully:", newResume);
+    //console.log("Resume saved successfully:", newResume);
 
     res.json({ message: "Resume submitted successfully", resume: newResume });
   } catch (error) {
