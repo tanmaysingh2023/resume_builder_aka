@@ -254,14 +254,18 @@ className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outli
 className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outline-none focus:ring-2 focus:ring-white-400"
       />
       <div className="button-container flex flex-wrap justify-center">
-      <button type="button" onClick={() => setWorkExperience(workExperience.filter((_, i) => i !== index))} className="ml-2 py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md">
+      <button type="button" onClick={() => setWorkExperience(workExperience.filter((_, i) => i !== index))} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
         Delete
       </button>
       </div>
     </div>
   ))}
   <div className="button-container flex flex-wrap justify-center">
-  <button type="button" onClick={() => setWorkExperience([...workExperience, { title: "", description: "", tenure: "" }])} className="mt-3 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+  <button type="button" onClick={() => setWorkExperience([...workExperience, { title: "", description: "", tenure: "" }])} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
     Add Work Experience
   </button>
   </div>
@@ -307,14 +311,18 @@ className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outli
 className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outline-none focus:ring-2 focus:ring-white-400"
       />
       <div className="button-container flex flex-wrap justify-center">
-      <button type="button" onClick={() => setProjects(projects.filter((_, i) => i !== index))} className="ml-2 py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md">
+      <button type="button" onClick={() => setProjects(projects.filter((_, i) => i !== index))} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
         Delete
       </button>
       </div>
     </div>
   ))}
   <div className="button-container flex flex-wrap justify-center">
-  <button type="button" onClick={() => setProjects([...projects, { title: "", description: "", tenure: "" }])} className="mt-3 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+  <button type="button" onClick={() => setProjects([...projects, { title: "", description: "", tenure: "" }])} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
     Add Project
   </button>
   </div>
@@ -360,20 +368,25 @@ className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outli
 className="w-full my-3 p-3 bg-black-700 border border-white-400 rounded-md outline-none focus:ring-2 focus:ring-white-400"
       />
       <div className="button-container flex flex-wrap justify-center">
-      <button type="button" onClick={() => setAchievements(achievements.filter((_, i) => i !== index))} className="ml-2 py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md">
+      <button type="button" onClick={() => setAchievements(achievements.filter((_, i) => i !== index))} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
         Delete
       </button>
       </div>
     </div>
   ))}
   <div className="button-container flex flex-wrap justify-center">
-  <button type="button" onClick={() => setAchievements([...achievements, { title: "", description: "", tenure: "" }])} className="mt-3 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+  <button type="button" onClick={() => setAchievements([...achievements, { title: "", description: "", tenure: "" }])} 
+  className="mt-3 py-2 px-5 bg-gradient-to-r from-white to-white hover:from-white hover:to-white text-black rounded-lg shadow-md transition-all duration-300"
+  >
     Add Achievement
   </button>
   </div>
 </section>
 
-        <button type="submit"  className="w-full py-3 px-5 bg-teal-500 hover:bg-teal-600 text-white rounded-md transition duration-300"
+        <button type="submit"  
+        className="w-full py-3 px-5 bg-white hover:bg-slate-400 text-black rounded-md transition duration-300"
         >Submit</button>
       </form>
     </div>

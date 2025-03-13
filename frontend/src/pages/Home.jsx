@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 
 const Home = () => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -7,6 +7,17 @@ const Home = () => {
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
         setPosition({ x: clientX / 40, y: clientY / 40 });
+    };
+
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        const user = localStorage.getItem("user");
+        if (user) {
+        navigate("/dashboard");
+        } else {
+        navigate("/login");
+        }
     };
 
     return (
@@ -23,11 +34,13 @@ const Home = () => {
                     </p>
 
                     <div className="flex space-x-4">
-                        <Link to="/login">
-                            <button className="bg-neon-blue text-white px-6 py-3 rounded-lg shadow-neon-blue hover:scale-105 transition-transform">
+                        
+                            <button 
+                            onClick={handleGetStarted}
+                            className="bg-neon-blue text-white px-6 py-3 rounded-lg shadow-neon-blue hover:scale-105 transition-transform">
                                 Get Started
                             </button>
-                        </Link>
+                       
 
                         <Link to="/templates">
                             <button className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-200 transition">
