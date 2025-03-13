@@ -11,7 +11,7 @@ const Header = () => {
 
                 <nav className="flex gap-6">
                     <Link 
-                        to="/" 
+                        to="/home" 
                         className="text-lg hover:text-neon-blue transition-all"
                     >
                         Home
