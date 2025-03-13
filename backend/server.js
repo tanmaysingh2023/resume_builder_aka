@@ -418,9 +418,10 @@ app.get("/api/activities/:userId", authenticate, async (req, res) => {
 });
 
 app.get('/api/resumes/:userId', async (req, res) => {
+  console.log("User ID Received:", req.params.userId);
   try {
       const resumes = await Resume.find({ userId: req.params.userId });
-    //  console.log("resume data=",resumes)
+      console.log("resume data=",resumes)
       res.json({ resumes });
   } catch (error) {
       res.status(500).json({ message: 'Error fetching resumes' });

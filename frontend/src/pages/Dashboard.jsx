@@ -25,7 +25,9 @@ function Dashboard() {
     fetch(`/api/resumes/${parsedUser._id}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data && data.resumes) {
+
           setResumes(data.resumes);
         }
         setLoading(false);
@@ -65,7 +67,7 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <h1 className="text-5xl text-neon-pink font-bold drop-shadow-neon-pink mb-6 text-center">
-        Dashboard
+      {user ? user.name : "Dashboard"}
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
