@@ -9,6 +9,9 @@ import SignUp from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import AuthRoute from './components/AuthRoute';
 import Header from "./pages/Header";
+import TutStructure from "./pages/TutStructure";
+import TutSummary from "./pages/TutSummary";
+import TutATS from "./pages/TutATS";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/tut-struc" element={<TutStructure/>}/>
+        <Route path="/tut-summary" element={<TutSummary/>}/>
+        <Route path="/tut-ats" element={<TutATS/>}/>
       </Routes>
       </div>
     </Router>
