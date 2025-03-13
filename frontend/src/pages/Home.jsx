@@ -34,7 +34,7 @@ const Home = () => {
 
                         <Link to="/templates">
                             <button className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-200 transition">
-                                Find Talent
+                                Explore Templates
                             </button>
                         </Link>
                     </div>
