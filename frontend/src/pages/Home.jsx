@@ -46,7 +46,9 @@ const Home = () => {
                             <button className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-200 transition">
                                 Explore Templates
                             </button>
+                            
                         </Link>
+                        
                     </div>
                 </div>
 
