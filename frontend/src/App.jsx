@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
 import Home from "./pages/Home";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import ResumePage from "./pages/ResumePage";
@@ -14,6 +14,15 @@ import TutSummary from "./pages/TutSummary";
 import TutATS from "./pages/TutATS";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import RForm from "./components/RForm";
+import Template1 from "./components/templates/Template1.jsx"
+import Template2 from "./components/templates/Template2.jsx";
+import Template3 from "./components/templates/Template3.jsx";
+import Template4 from "./components/templates/Template4.jsx";
+import Template5 from "./components/templates/Template5.jsx";
+import Template6 from "./components/templates/Template6.jsx";
+import CreateAkaResumePage from './pages/CreateAkaResumePage';
+
 
 function App() {
   return (
@@ -34,6 +43,14 @@ function App() {
         <Route path="/tut-ats" element={<TutATS/>}/>
         <Route path="/about" element={<About/>}></Route>
         <Route path="/contact" element={<Contact/>}></Route>
+        <Route path="/form" element={<RForm/>}></Route>
+        <Route path="/temp1" element={<Template1/>}></Route>
+        <Route path="/temp2" element={<Template2/>}></Route>
+        <Route path="/temp3" element={<Template3/>}></Route>
+        <Route path="/temp4" element={<Template4/>}></Route>
+        <Route path="/temp5" element={<Template5/>}></Route>
+        <Route path="/temp6" element={<Template6/>}></Route>
+        <Route path="/create-resume/:templateId" element={<CreateAkaResumePage />} />
       </Routes>
       </div>
     </Router>

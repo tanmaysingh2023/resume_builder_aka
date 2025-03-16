@@ -477,6 +477,84 @@ app.delete("/api/resumes/delete/:id",  async (req, res) => {
 });
 
 
+
+// Route to load templates
+app.get('/api/templates/:templateName', async (req, res) => {
+  const { templateName } = req.params;
+
+  try {
+      const template = require(`./templates/${templateName}`);
+      res.send(template);  // Send HTML content as response
+  } catch (err) {
+      res.status(404).json({ error: "Template not found." });
+  }
+});
+
+// Unified schema: templateId + data (Mixed)
+// We'll store all documents in the "aka_resume" collection
+const akaResumeSchema = new mongoose.Schema(
+  {
+    userId: { type: String, required: true },
+    templateId: { type: String, required: true },
+    data: { type: mongoose.Schema.Types.Mixed, required: true },
+    createdAt: { type: Date, default: Date.now },
+  },
+  { collection: 'aka_resume' } // The collection name in MongoDB
+);
+
+// Create the Mongoose model
+const AkaResume = mongoose.model('AkaResume', akaResumeSchema);
+
+// POST endpoint to save an aka_resume
+app.post('/api/aka_resume', async (req, res) => {
+  try {
+    const newAkaResume = new AkaResume(req.body);
+    await newAkaResume.save();
+    res.status(201).json(newAkaResume);
+  } catch (error) {
+    console.error('Error saving aka_resume:', error);
+    res.status(500).json({ message: 'Error saving aka_resume', error });
+  }
+});
+
+// GET endpoint to fetch all aka_resume documents
+app.get('/api/aka_resume', async (req, res) => {
+  try {
+    const allAkaResume = await AkaResume.find().sort({ createdAt: -1 });
+    res.json(allAkaResume);
+  } catch (error) {
+    console.error('Error fetching aka_resume:', error);
+    res.status(500).json({ message: 'Error fetching aka_resume', error });
+  }
+});
+
+app.get('/api/aka_resume/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    // Assumes you store the user's ID in the resume's data field or as a separate field
+    const resumes = await AkaResume.find({ userId }).sort({ createdAt: -1 });
+    res.json({ resumes });
+  } catch (error) {
+    console.error("Error fetching aka_resume:", error);
+    res.status(500).json({ message: "Error fetching aka_resume", error });
+  }
+});
+
+
+app.delete('/api/aka_resume/delete/:id', async (req, res) => {
+  try {
+    const result = await AkaResume.findByIdAndDelete(req.params.id);
+    if (result) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
+    }
+  } catch (error) {
+    console.error("Error deleting aka_resume:", error);
+    res.status(500).json({ success: false, error });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
