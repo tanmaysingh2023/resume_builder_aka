@@ -59,6 +59,11 @@ function Dashboard() {
     }
   };
 
+  const handleViewAkaResume = (resume) => {
+    navigate(`/aka_resume/${resume._id}?templateId=${resume.templateId}`);
+  };
+  
+
   return (
     <div className="min-h-screen bg-black text-white p-6 pt-20">
       <h1 className="text-5xl text-neon-purple font-bold drop-shadow-neon-pink mb-6 text-center">
@@ -101,14 +106,14 @@ function Dashboard() {
             {akaResumes.map((resume) => (
               <li key={resume._id} className="bg-gray-900 p-4 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold">
-                  {resume.data.title || "Untitled AkaResume"}
+                  {resume.data.name || "Untitled AkaResume"}
                 </h3>
                 <p className="text-sm text-gray-400">
                   Created on: {new Date(resume.createdAt).toLocaleDateString()}
                 </p>
                 <button
                   className="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-500 transition"
-                  onClick={() => navigate(`/aka_resume/${resume._id}`)}
+                  onClick={() => handleViewAkaResume(resume)}
                 >
                   View
                 </button>

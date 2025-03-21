@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactToPrint from 'react-to-print';
+// Removed html2canvas and jsPDF imports
 
-// Initial resume data
+// Initial resume data for Template1
 const initialResume = {
   name: "Mason Turner",
   title: "Experienced Sales Professional | B2B | Networking",
@@ -34,7 +35,6 @@ const initialResume = {
       ]
     }
   ],
-  // Change education to an array for multiple entries
   education: [
     {
       degree: "Bachelor of Business Administration",
@@ -48,316 +48,362 @@ const initialResume = {
   ]
 };
 
-// ResumeLayout component with forwarded ref
-const ResumeLayout = React.forwardRef(
-  (
-    {
-      resume,
-      isEditing,
-      handleChange,
-      handleEducationChange,
-      handleExperienceChange,
-      handleDetailChange,
-      handleAchievementChange,
-      handleAddExperience,
-      handleAddDetail,
-      handleAddEducation,
-      handleAddAchievement,
-    },
-    ref
-  ) => {
-    return (
-      <div
-        ref={ref}
-        className="mx-auto max-w-xl p-6 text-gray-800"
-        style={{ backgroundColor: '#ffffff', color: '#000000' }}
-      >
-        {isEditing ? (
-          <>
-            {/* Editable Header */}
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">Name</label>
-              <input
-                type="text"
-                value={resume.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                className="w-full p-2 border rounded"
-              />
+const ResumeLayout = React.forwardRef((props, ref) => {
+  const {
+    resume,
+    isEditing,
+    handleChange,
+    handleEducationChange,
+    handleExperienceChange,
+    handleDetailChange,
+    handleAchievementChange,
+    handleAddExperience,
+    handleAddDetail,
+    handleAddEducation,
+    handleAddAchievement,
+  } = props;
+
+  return (
+    <div
+      ref={ref}
+      className="mx-auto max-w-xl p-6 text-gray-800"
+      style={{ backgroundColor: '#ffffff', color: '#000000' }}
+    >
+      {isEditing ? (
+        <>
+          {/* Editable Header */}
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">Name</label>
+            <input
+              type="text"
+              value={resume.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">Title</label>
+            <input
+              type="text"
+              value={resume.title}
+              onChange={(e) => handleChange("title", e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">Phone</label>
+            <input
+              type="text"
+              value={resume.phone}
+              onChange={(e) => handleChange("phone", e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">Email</label>
+            <input
+              type="text"
+              value={resume.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">LinkedIn</label>
+            <input
+              type="text"
+              value={resume.linkedin}
+              onChange={(e) => handleChange("linkedin", e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          {/* Editable Summary */}
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2">Summary</label>
+            <textarea
+              value={resume.summary}
+              onChange={(e) => handleChange("summary", e.target.value)}
+              className="w-full p-2 border rounded"
+              rows="4"
+            />
+          </div>
+          {/* Editable Experience */}
+          <h2 className="mt-6 text-lg font-semibold border-b pb-1">Experience</h2>
+          {resume.experiences.map((exp, index) => (
+            <div key={index} className="mt-4 border p-4 rounded">
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Role</label>
+                <input
+                  type="text"
+                  value={exp.role}
+                  onChange={(e) =>
+                    handleExperienceChange(index, "role", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Company</label>
+                <input
+                  type="text"
+                  value={exp.company}
+                  onChange={(e) =>
+                    handleExperienceChange(index, "company", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Duration</label>
+                <input
+                  type="text"
+                  value={exp.duration}
+                  onChange={(e) =>
+                    handleExperienceChange(index, "duration", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Details</label>
+                {exp.details.map((detail, dIndex) => (
+                  <textarea
+                    key={dIndex}
+                    value={detail}
+                    onChange={(e) =>
+                      handleDetailChange(index, dIndex, e.target.value)
+                    }
+                    className="w-full p-2 border rounded mb-2"
+                    rows="2"
+                  />
+                ))}
+                <button
+                  onClick={() => handleAddDetail(index)}
+                  className="text-sm text-blue-500 hover:underline"
+                >
+                  + Add Detail
+                </button>
+              </div>
             </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">Title</label>
-              <input
-                type="text"
-                value={resume.title}
-                onChange={(e) => handleChange("title", e.target.value)}
-                className="w-full p-2 border rounded"
-              />
+          ))}
+          <button
+            onClick={handleAddExperience}
+            className="mt-2 text-sm text-blue-500 hover:underline"
+          >
+            + Add Experience
+          </button>
+          {/* Editable Education */}
+          <h2 className="mt-6 text-lg font-semibold border-b pb-1">Education</h2>
+          {resume.education.map((edu, index) => (
+            <div key={index} className="mb-4 border p-4 rounded">
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Degree</label>
+                <input
+                  type="text"
+                  value={edu.degree}
+                  onChange={(e) =>
+                    handleEducationChange(index, "degree", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">School</label>
+                <input
+                  type="text"
+                  value={edu.school}
+                  onChange={(e) =>
+                    handleEducationChange(index, "school", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Graduation</label>
+                <input
+                  type="text"
+                  value={edu.graduation}
+                  onChange={(e) =>
+                    handleEducationChange(index, "graduation", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                />
+              </div>
             </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">Phone</label>
-              <input
-                type="text"
-                value={resume.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">Email</label>
-              <input
-                type="text"
-                value={resume.email}
-                onChange={(e) => handleChange("email", e.target.value)}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">LinkedIn</label>
-              <input
-                type="text"
-                value={resume.linkedin}
-                onChange={(e) => handleChange("linkedin", e.target.value)}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            {/* Editable Summary */}
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2">Summary</label>
-              <textarea
-                value={resume.summary}
-                onChange={(e) => handleChange("summary", e.target.value)}
-                className="w-full p-2 border rounded"
-                rows="4"
-              />
-            </div>
-            {/* Editable Experience */}
-            <h2 className="mt-6 text-lg font-semibold border-b pb-1">Experience</h2>
+          ))}
+          <button
+            onClick={handleAddEducation}
+            className="mt-2 text-sm text-blue-500 hover:underline"
+          >
+            + Add Education
+          </button>
+          {/* Editable Key Achievements */}
+          <h2 className="mt-6 text-lg font-semibold border-b pb-1">
+            Key Achievements
+          </h2>
+          {resume.achievements.map((ach, index) => (
+            <textarea
+              key={index}
+              value={ach}
+              onChange={(e) => handleAchievementChange(index, e.target.value)}
+              className="w-full p-2 border rounded mb-2"
+              rows="2"
+            />
+          ))}
+          <button
+            onClick={handleAddAchievement}
+            className="mt-2 text-sm text-blue-500 hover:underline"
+          >
+            + Add Achievement
+          </button>
+        </>
+      ) : (
+        <>
+          {/* View Mode */}
+          <header className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-1">{resume.name}</h1>
+            <p className="text-sm text-gray-600">{resume.title}</p>
+            <p className="text-sm text-gray-500 mt-1">
+              {resume.phone} |{" "}
+              <a
+                href={`mailto:${resume.email}`}
+                className="text-blue-500 hover:underline"
+              >
+                {resume.email}
+              </a>{" "}
+              |{" "}
+              <a
+                href={resume.linkedin}
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {resume.linkedin}
+              </a>
+            </p>
+          </header>
+          <section>
+            <h2 className="mt-6 text-lg font-semibold border-b pb-1">
+              Summary
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed">{resume.summary}</p>
+          </section>
+          <section>
+            <h2 className="mt-6 text-lg font-semibold border-b pb-1">
+              Experience
+            </h2>
             {resume.experiences.map((exp, index) => (
-              <div key={index} className="mt-4 border p-4 rounded">
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Role</label>
-                  <input
-                    type="text"
-                    value={exp.role}
-                    onChange={(e) =>
-                      handleExperienceChange(index, "role", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Company</label>
-                  <input
-                    type="text"
-                    value={exp.company}
-                    onChange={(e) =>
-                      handleExperienceChange(index, "company", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Duration</label>
-                  <input
-                    type="text"
-                    value={exp.duration}
-                    onChange={(e) =>
-                      handleExperienceChange(index, "duration", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Details</label>
+              <div key={index} className="mt-4">
+                <h3 className="text-xl font-bold">{exp.role}</h3>
+                <p className="text-gray-500">{exp.company}</p>
+                <p className="text-gray-500 italic">{exp.duration}</p>
+                <ul className="list-disc list-inside text-sm mt-2 space-y-1">
                   {exp.details.map((detail, dIndex) => (
-                    <textarea
-                      key={dIndex}
-                      value={detail}
-                      onChange={(e) =>
-                        handleDetailChange(index, dIndex, e.target.value)
-                      }
-                      className="w-full p-2 border rounded mb-2"
-                      rows="2"
-                    />
+                    <li key={dIndex}>{detail}</li>
                   ))}
-                  <button
-                    onClick={() => handleAddDetail(index)}
-                    className="text-sm text-blue-500 hover:underline"
-                  >
-                    + Add Detail
-                  </button>
-                </div>
+                </ul>
               </div>
             ))}
-            <button
-              onClick={handleAddExperience}
-              className="mt-2 text-sm text-blue-500 hover:underline"
-            >
-              + Add Experience
-            </button>
-            {/* Editable Education */}
-            <h2 className="mt-6 text-lg font-semibold border-b pb-1">Education</h2>
+          </section>
+          <section>
+            <h2 className="mt-6 text-lg font-semibold border-b pb-1">
+              Education
+            </h2>
             {resume.education.map((edu, index) => (
-              <div key={index} className="mb-4 border p-4 rounded">
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Degree</label>
-                  <input
-                    type="text"
-                    value={edu.degree}
-                    onChange={(e) =>
-                      handleEducationChange(index, "degree", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">School</label>
-                  <input
-                    type="text"
-                    value={edu.school}
-                    onChange={(e) =>
-                      handleEducationChange(index, "school", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2">Graduation</label>
-                  <input
-                    type="text"
-                    value={edu.graduation}
-                    onChange={(e) =>
-                      handleEducationChange(index, "graduation", e.target.value)
-                    }
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
+              <div key={index} className="mt-2">
+                <p className="text-sm">
+                  <span className="font-bold">{edu.degree}</span> - {edu.school}
+                </p>
+                <p className="text-gray-500">Graduated: {edu.graduation}</p>
               </div>
             ))}
-            <button
-              onClick={handleAddEducation}
-              className="mt-2 text-sm text-blue-500 hover:underline"
-            >
-              + Add Education
-            </button>
-            {/* Editable Key Achievements */}
+          </section>
+          <section>
             <h2 className="mt-6 text-lg font-semibold border-b pb-1">
               Key Achievements
             </h2>
-            {resume.achievements.map((ach, index) => (
-              <textarea
-                key={index}
-                value={ach}
-                onChange={(e) => handleAchievementChange(index, e.target.value)}
-                className="w-full p-2 border rounded mb-2"
-                rows="2"
-              />
-            ))}
-            <button
-              onClick={handleAddAchievement}
-              className="mt-2 text-sm text-blue-500 hover:underline"
-            >
-              + Add Achievement
-            </button>
-          </>
-        ) : (
-          <>
-            {/* View Mode */}
-            <header className="text-center mb-8">
-              <h1 className="text-3xl font-bold mb-1">{resume.name}</h1>
-              <p className="text-sm text-gray-600">{resume.title}</p>
-              <p className="text-sm text-gray-500 mt-1">
-                {resume.phone} |{' '}
-                <a
-                  href={`mailto:${resume.email}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {resume.email}
-                </a>{' '}
-                |{' '}
-                <a
-                  href={resume.linkedin}
-                  className="text-blue-500 hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {resume.linkedin}
-                </a>
-              </p>
-            </header>
-            <section>
-              <h2 className="mt-6 text-lg font-semibold border-b pb-1">
-                Summary
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed">{resume.summary}</p>
-            </section>
-            <section>
-              <h2 className="mt-6 text-lg font-semibold border-b pb-1">
-                Experience
-              </h2>
-              {resume.experiences.map((exp, index) => (
-                <div key={index} className="mt-4">
-                  <h3 className="text-base font-bold">{exp.role}</h3>
-                  <p className="text-sm text-gray-500">{exp.company}</p>
-                  <p className="text-sm italic text-gray-500">{exp.duration}</p>
-                  <ul className="list-disc list-inside text-sm mt-2 space-y-1">
-                    {exp.details.map((detail, dIndex) => (
-                      <li key={dIndex}>{detail}</li>
-                    ))}
-                  </ul>
-                </div>
+            <ul className="list-disc list-inside text-sm mt-2 space-y-1">
+              {resume.achievements.map((ach, index) => (
+                <li key={index}>{ach}</li>
               ))}
-            </section>
-            <section>
-              <h2 className="mt-6 text-lg font-semibold border-b pb-1">
-                Education
-              </h2>
-              {resume.education.map((edu, index) => (
-                <div key={index} className="mb-4">
-                  <p className="text-sm">
-                    <span className="font-bold">{edu.degree}</span> - {edu.school}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Graduated: {edu.graduation}
-                  </p>
-                </div>
-              ))}
-            </section>
-            <section>
-              <h2 className="mt-6 text-lg font-semibold border-b pb-1">
-                Key Achievements
-              </h2>
-              <ul className="list-disc list-inside text-sm mt-2 space-y-1">
-                {resume.achievements.map((ach, index) => (
-                  <li key={index}>{ach}</li>
-                ))}
-              </ul>
-            </section>
-          </>
-        )}
-      </div>
-    );
-  }
-);
+            </ul>
+          </section>
+        </>
+      )}
+    </div>
+  );
+});
 
 const Template1 = () => {
+  const [user, setUser] = useState(null);
   const [resume, setResume] = useState(initialResume);
   const [isEditing, setIsEditing] = useState(false);
   const [tempResume, setTempResume] = useState(initialResume);
   const componentRef = useRef(null);
 
-  // Update handlers for general fields
+  // Retrieve user data from localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (!userData) {
+      navigate("/home");
+      return;
+    }
+    const parsedUser = JSON.parse(userData);
+    setUser(parsedUser);
+  }, []);
+
+  // Modified save handler: Instead of generating PDF client-side, simply send resume data along with user ID to the backend
+  const handleSave = async () => {
+    setResume(tempResume);
+    setIsEditing(false);
+    try {
+      const storedUser = localStorage.getItem("user");
+      let userId = "";
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        userId = parsedUser._id;
+      }
+
+      const payload = {
+        userId,
+        templateId: "temp1", // Modify if necessary based on the template
+        data: tempResume,
+        // Do not send PDF data; the server will generate the PDF
+      };
+
+      const response = await fetch('/api/aka_resume', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      const savedAkaResume = await response.json();
+      console.log("AkaResume saved:", savedAkaResume);
+    } catch (error) {
+      console.error("Error saving AkaResume:", error);
+    }
+  };
+
+  const handleCancel = () => {
+    setTempResume(resume);
+    setIsEditing(false);
+  };
+
+  // Other handlers (handleChange, handleEducationChange, etc.) remain unchanged
   const handleChange = (field, value) => {
     setTempResume({ ...tempResume, [field]: value });
   };
 
-  // Education now is an array; we update by index.
   const handleEducationChange = (index, field, value) => {
     const newEducation = [...tempResume.education];
     newEducation[index] = { ...newEducation[index], [field]: value };
     setTempResume({ ...tempResume, education: newEducation });
   };
-  
 
   const handleExperienceChange = (index, field, value) => {
     const newExperiences = [...tempResume.experiences];
@@ -379,7 +425,6 @@ const Template1 = () => {
     setTempResume({ ...tempResume, achievements: newAchievements });
   };
 
-  // Handlers to add new entries
   const handleAddExperience = () => {
     const newExperience = {
       role: "",
@@ -418,19 +463,8 @@ const Template1 = () => {
     }));
   };
 
-  const handleSave = () => {
-    setResume(tempResume);
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setTempResume(resume);
-    setIsEditing(false);
-  };
-
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg my-10">
-      {/* Top bar with buttons */}
       <div className="flex justify-end gap-2">
         <ReactToPrint
           trigger={() => (
@@ -466,24 +500,21 @@ const Template1 = () => {
         )}
       </div>
 
-      <ResumeLayout
-        ref={componentRef}
-        resume={isEditing ? tempResume : resume}
-        isEditing={isEditing}
-        handleChange={handleChange}
-        handleEducationChange={(index, e) =>
-          handleEducationChange(index, { field: "degree", value: e.target.value })
-        }
-        // We pass a modified handleEducationChange to handle each field
-        // For school and graduation, we use inline arrow functions here:
-        handleExperienceChange={handleExperienceChange}
-        handleDetailChange={handleDetailChange}
-        handleAchievementChange={handleAchievementChange}
-        handleAddExperience={handleAddExperience}
-        handleAddDetail={handleAddDetail}
-        handleAddEducation={handleAddEducation}
-        handleAddAchievement={handleAddAchievement}
-      />
+      <div ref={componentRef} style={{ backgroundColor: "#ffffff", color: "#000000" }}>
+        <ResumeLayout
+          resume={isEditing ? tempResume : resume}
+          isEditing={isEditing}
+          handleChange={handleChange}
+          handleEducationChange={handleEducationChange}
+          handleExperienceChange={handleExperienceChange}
+          handleDetailChange={handleDetailChange}
+          handleAchievementChange={handleAchievementChange}
+          handleAddExperience={handleAddExperience}
+          handleAddDetail={handleAddDetail}
+          handleAddEducation={handleAddEducation}
+          handleAddAchievement={handleAddAchievement}
+        />
+      </div>
     </div>
   );
 };

@@ -29,7 +29,7 @@ const TemplatePage = () => {
       navigate('/login');
     } else {
       // Otherwise, navigate to the create resume page with the selected template
-      navigate(`/create-resume/${templateId}`);
+      navigate(`/${templateId}`);
     }
   };
 

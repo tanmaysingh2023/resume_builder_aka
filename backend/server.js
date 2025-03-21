@@ -492,15 +492,14 @@ app.get('/api/templates/:templateName', async (req, res) => {
 
 // Unified schema: templateId + data (Mixed)
 // We'll store all documents in the "aka_resume" collection
-const akaResumeSchema = new mongoose.Schema(
-  {
-    userId: { type: String, required: true },
-    templateId: { type: String, required: true },
-    data: { type: mongoose.Schema.Types.Mixed, required: true },
-    createdAt: { type: Date, default: Date.now },
-  },
-  { collection: 'aka_resume' } // The collection name in MongoDB
-);
+const Schema=mongoose.Schema
+const akaResumeSchema = new Schema({
+  userId: { type: String, required: true },
+  templateId: { type: String, required: true },
+  data: { type: Schema.Types.Mixed, required: true },
+  pdfFileId: { type: Schema.Types.ObjectId }, // Reference to the stored PDF in GridFS
+  createdAt: { type: Date, default: Date.now },
+}, { collection: 'aka_resume' });
 
 // Create the Mongoose model
 const AkaResume = mongoose.model('AkaResume', akaResumeSchema);
@@ -531,12 +530,12 @@ app.get('/api/aka_resume', async (req, res) => {
 app.get('/api/aka_resume/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    // Assumes you store the user's ID in the resume's data field or as a separate field
     const resumes = await AkaResume.find({ userId }).sort({ createdAt: -1 });
-    res.json({ resumes });
+    // Always return JSON, even if resumes is empty
+    res.json({ resumes: resumes || [] });
   } catch (error) {
     console.error("Error fetching aka_resume:", error);
-    res.status(500).json({ message: "Error fetching aka_resume", error });
+    res.status(500).json({ message: 'Error fetching aka_resume', error });
   }
 });
 
