@@ -22,7 +22,7 @@ import Template4 from "./components/templates/Template4.jsx";
 import Template5 from "./components/templates/Template5.jsx";
 import Template6 from "./components/templates/Template6.jsx";
 import CreateAkaResumePage from './pages/CreateAkaResumePage';
-
+import ResumeViewer from "./components/ResumeViewer.jsx";
 
 function App() {
   return (
@@ -51,6 +51,7 @@ function App() {
         <Route path="/temp5" element={<Template5/>}></Route>
         <Route path="/temp6" element={<Template6/>}></Route>
         <Route path="/create-resume/:templateId" element={<CreateAkaResumePage />} />
+        <Route path="/aka_resume/:id" element={<ResumeViewer />} />
       </Routes>
       </div>
     </Router>
