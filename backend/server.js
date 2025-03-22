@@ -417,6 +417,22 @@ app.get("/api/activities/:userId", authenticate, async (req, res) => {
     }
 });
 
+app.get("/api/resume/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Resume.findOne({ id: id }).lean(); // Replace 'Resume' with your actual model name
+
+    if (!data) {
+      return res.status(404).json({ message: "Data not found" });
+    }
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving data", error: error.message });
+  }
+});
+
+
 app.get('/api/resumes/:userId', async (req, res) => {
   console.log("User ID Received:", req.params.userId);
   try {

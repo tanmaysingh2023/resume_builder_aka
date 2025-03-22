@@ -98,4 +98,4 @@ const CreateAkaResumePage = () => {
   );
 };
 
-export default CreateAkaResumePage;
+export default CreateAkaResumePage

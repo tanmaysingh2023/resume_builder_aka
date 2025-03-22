@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 // Removed html2canvas and jsPDF imports
 
@@ -340,6 +341,7 @@ const Template1 = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempResume, setTempResume] = useState(initialResume);
   const componentRef = useRef(null);
+  const navigate = useNavigate()
 
   // Retrieve user data from localStorage
   useEffect(() => {
@@ -384,6 +386,7 @@ const Template1 = () => {
 
       const savedAkaResume = await response.json();
       console.log("AkaResume saved:", savedAkaResume);
+      navigate('/dashboard')
     } catch (error) {
       console.error("Error saving AkaResume:", error);
     }
