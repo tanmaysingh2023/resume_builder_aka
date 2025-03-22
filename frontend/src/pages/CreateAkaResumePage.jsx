@@ -68,22 +68,22 @@ const CreateAkaResumePage = () => {
         Create AkaResume (Template: {templateId})
       </h1>
       <div className="mb-4">
-        <label className="block mb-1">Resume Title</label>
+        <label className="block mb-1 text-white">Resume Title</label>
         <input
           name="title"
           value={resumeData.data.title}
           onChange={handleChange}
-          className="p-2 rounded text-black w-full"
+          className="p-2 rounded text-white w-full"
           placeholder="Enter your resume title"
         />
       </div>
       <div className="mb-4">
-        <label className="block mb-1">Summary</label>
+        <label className="block mb-1 text-white">Summary</label>
         <textarea
           name="summary"
           value={resumeData.data.summary}
           onChange={handleChange}
-          className="p-2 rounded text-black w-full"
+          className="p-2 rounded text-white w-full"
           placeholder="Write a short summary..."
         />
       </div>
