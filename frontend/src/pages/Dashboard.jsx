@@ -11,7 +11,7 @@ function Dashboard() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (!userData) {
@@ -35,6 +35,7 @@ function Dashboard() {
         console.error("Error fetching aka_resumes:", error);
         setError("Failed to load akaResumes");
         setLoading(false);
+        
       });
   }, [navigate]);
 
